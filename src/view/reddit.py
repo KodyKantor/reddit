@@ -16,6 +16,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
         autoescape=True)
 
 DEFAULT_SUB = '/cscareerequestions'
+DEFAULT_SECTION = 'hot'
 
 class MainPage(webapp2.RequestHandler):
     '''
@@ -28,19 +29,17 @@ class MainPage(webapp2.RequestHandler):
 class GetReddit(webapp2.RequestHandler):
     def post(self):
         sub = self.request.get('subreddit', default_value=DEFAULT_SUB)
-        
+        section = self.request.get('section', default_value=DEFAULT_SECTION)
         
         
         template = JINJA_ENVIRONMENT.get_template('index.html')
         
-        runner = agent.Agent(threadID=1, subreddit=sub)
-        resp = runner.retreive()
-        for entry in resp:
-            for index in entry:
-                index = unicode(index)
+        runner = agent.Agent(subreddit=sub)
+        resp = runner.retrieve(section)
         
         template_values = {
-                'content': resp
+                'content': resp,
+                'section': section
                 }
         self.response.write(template.render(template_values))
 

@@ -4,37 +4,35 @@ Created on Jun 16, 2014
 @author: kkantor
 '''
 
-import threading
 import praw
 
-class Agent(threading.Thread):
+class Agent():
     '''
-    classdocs
+    The Agent is the component that interact with the Reddit API
     '''
 
+    LIMIT = 50
 
-    def __init__(self, threadID, subreddit):
+    def __init__(self, subreddit):
         '''
         Constructor
         '''
-        threading.Thread.__init__(self)
-        self.threadID = threadID
         self.subreddit = subreddit
         self.agent = praw.Reddit(user_agent='Kantor Reddit by /u/kantosaurus')
         self.sub = self.agent.get_subreddit(self.subreddit)
         
-    def retreive(self):
+    def retrieve(self, section):
         '''
-        Implements the threading class
+        Retrieves the 
         '''
-        hot = self.getHot()
-        print(hot)
-        return hot
-    
-    def getHot(self):
-        hot = self.sub.get_hot(limit=10)
-        entries = []
-        for entry in hot:
-            entry = str(entry)
-            entries.append(entry.split(' :: '))
-        return entries
+        if section == 'HOT':
+            entries = self.sub.get_hot(limit=self.LIMIT)
+        elif section == 'RECENT':
+            entries = self.sub.get_new(limit=self.LIMIT)
+        elif section == 'TOP':
+            entries = self.sub.get_top(limit=self.LIMIT)
+        resp = []
+        for entry in entries:
+            entry = unicode(entry)
+            resp.append(entry.split(' :: '))
+        return resp
