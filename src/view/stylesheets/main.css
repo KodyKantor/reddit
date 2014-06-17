@@ -1,0 +1,21 @@
+body {
+  font-family: Verdana, Helvetica, sans-serif;
+  background-color: #DDDDDD;
+}
+
+#inputbox
+{
+	text-align: center;
+}
+#title
+{
+	text-align: center;
+	font-size: 3em;
+}
+#content
+{
+}
+#karma
+{
+	margin-right:5em;
+}

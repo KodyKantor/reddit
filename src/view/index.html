@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+  	<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+  <body>
+  	<div id="title">Reddit</div>
+    <form action="/sub" method="post" id="inputbox">
+      <div>Get a Subreddit!<br/><input type="text" name="subreddit"></textarea></div>
+      <div><input type="submit" value="Get Subreddit"></div>
+    </form>
+    <hr>
+  <div id="content">
+  	{% for entry in content %}
+  	  	<div>
+  			<span id="karma"><b>{{ entry[0] }}</b></span><span id="topic">{{ entry[1] }}</span>
+  	  	<div>
+  	{% endfor %}
+  </div>
+  </body>
+</html>
+{% endautoescape %}
